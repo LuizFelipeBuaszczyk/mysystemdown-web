@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+    height: 10%;
+}
+
+.container a {
+    text-decoration: none;
+}
+
+.container nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.container nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.linkItem {
+    list-style: none;
+}
+
+.linkItem:hover {
+    text-decoration: underline;
+}
