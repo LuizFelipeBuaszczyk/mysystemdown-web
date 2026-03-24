@@ -3,12 +3,17 @@
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    gap: 20px;
+    gap: 50px;
     height: 10%;
+    background-color: rgb(44, 13, 123);
+    margin-bottom: 20px;
 }
 
 .container a {
     text-decoration: none;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
 }
 
 .container nav {
@@ -24,8 +29,10 @@
 
 .linkItem {
     list-style: none;
+    font-size: 16px;
 }
 
 .linkItem:hover {
-    text-decoration: underline;
+    font-size: 18px;
+    transition: 0.5s;
 }
