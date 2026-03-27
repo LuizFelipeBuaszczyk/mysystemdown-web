@@ -34,6 +34,7 @@ export default function SignUp() {
         submit(formData);
     }
 
+    // TODO: Tratar mensagem de error e succes melhor
     return (
         <div className={styles.container}>
             <h1>Sign Up</h1>
