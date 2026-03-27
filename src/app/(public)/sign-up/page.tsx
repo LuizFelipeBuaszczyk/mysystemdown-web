@@ -1,19 +1,23 @@
 "use client"
 
-import { useState } from 'react';
-import Link from 'next/link';
-
 import styles from '@/app/(public)/sign-in/signin.module.css';
+
+import { useState } from 'react';
 import { useForm } from '@/hooks/useForm';
 
-interface LoginSchema {
+interface UserSchema {
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
 }
 
-export default function SignIn() {
-    const { submit, loading, error, success } = useForm("/auth/login/");
-    const [formData, setFormData] = useState<LoginSchema>({
+
+export default function SignUp() {
+    const { submit, loading, error, success } = useForm("/users/");
+    const [formData, setFormData] = useState<UserSchema>({
+        first_name: '',
+        last_name: '',
         email: '',
         password: ''
     })
@@ -25,32 +29,40 @@ export default function SignIn() {
         })
     }
 
-    const handleSubmit = async (e: React.SubmitEvent) => {
+    const handleFormSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
         submit(formData);
     }
 
-    // TODO: Tratar mensagem de error e succes melhor
     return (
         <div className={styles.container}>
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
+                <section className={styles.input}>
+                    <label htmlFor="firstNameInput">First Name</label>
+                    <input type="text" name="first_name" id="firstNameInput" onChange={handleChange}/>
+                </section>
+
+                <section className={styles.input}>
+                    <label htmlFor="lastNameInput">Last Name</label>
+                    <input type="text" name="last_name" id="lastNameInput" onChange={handleChange}/>
+                </section>
+
                 <section className={styles.input}>
                     <label htmlFor="emailInput">Email</label>
                     <input type="email" name="email" id="emailInput" onChange={handleChange}/>
                 </section>
+
                 <section className={styles.input}>
                     <label htmlFor="passwordInput">Password</label>
                     <input type="password" name="password" id="passwordInput" onChange={handleChange}/>
-                </section>                
-                <button type="submit">Login</button>
+                </section>
 
+                <button type="submit">Sign Up</button>
                 {error && <p style={{ color: "red" }}>{error}</p>} 
                 {success && <p style={{ color: "green" }}>Enviado com sucesso!</p>}
             </form>
-
-            <Link href='/sign-up'>Crie uma conta</Link>
         </div>
-    );
+    )
 }

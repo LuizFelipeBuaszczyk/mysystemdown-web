@@ -2,7 +2,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function apiRequest<T>(endpoint: string, method: string, body?: any): Promise<T> {
 
-    console.log(API_URL)
     const res = await fetch(`${API_URL}${endpoint}`, {
         method,
         headers: { "Content-Type": "application/json" },
