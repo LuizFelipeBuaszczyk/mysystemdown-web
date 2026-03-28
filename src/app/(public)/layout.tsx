@@ -6,9 +6,9 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <body>
+    <>
       <Header />
       {children}
-    </body>
+    </>
   );
 }
