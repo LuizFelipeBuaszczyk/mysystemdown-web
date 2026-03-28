@@ -6,8 +6,8 @@ const publicRoutes = [
   {path: '/sign-up', whenAuthenticated: 'redirect'},
 ]
 
-const REDIRECT_WHEN_NOT_AUTHENTICATED = '/sign-in'
-
+const REDIRECT_WHEN_NOT_AUTHENTICATED = '/sign-in';
+const REDIRECT_WHEN_AUTHENTICATED = '/dashboard';
 
 export function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -25,12 +25,12 @@ export function proxy(request: NextRequest) {
     }
     
     if (token && publicRoute.whenAuthenticated === 'redirect') {
-      return NextResponse.redirect(new URL(REDIRECT_WHEN_NOT_AUTHENTICATED, request.url));
+      return NextResponse.redirect(new URL(REDIRECT_WHEN_AUTHENTICATED, request.url));
     }
   }
 
   if (!token && !publicRoute){
-    return NextResponse.redirect(new URL(`/`, request.url));
+    return NextResponse.redirect(new URL(REDIRECT_WHEN_NOT_AUTHENTICATED, request.url));
   }
   
   return NextResponse.next();
