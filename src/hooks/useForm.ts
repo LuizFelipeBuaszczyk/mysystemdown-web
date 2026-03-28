@@ -5,14 +5,16 @@ export function useForm(endpoint: string) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [response, setResponse] = useState<any>(null);
 
   const submit = async (data: any) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
     try {
-      await apiRequest(endpoint, "POST", data);
+      const response = await apiRequest(endpoint, "POST", data);
       setSuccess(true);
+      setResponse(response);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -20,5 +22,5 @@ export function useForm(endpoint: string) {
     }
   };
 
-  return { submit, loading, error, success };
+  return { submit, loading, error, success, response };
 }

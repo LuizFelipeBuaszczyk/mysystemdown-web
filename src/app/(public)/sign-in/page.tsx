@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 import styles from '@/app/(public)/sign-in/signin.module.css';
 import { useForm } from '@/hooks/useForm';
@@ -12,7 +13,8 @@ interface LoginSchema {
 }
 
 export default function SignIn() {
-    const { submit, loading, error, success } = useForm("/auth/login/");
+    const router = useRouter();
+    const { submit, loading, error, success, response } = useForm("/auth/login/");
     const [formData, setFormData] = useState<LoginSchema>({
         email: '',
         password: ''
@@ -27,8 +29,17 @@ export default function SignIn() {
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
-        submit(formData);
+        await submit(formData);
     }
+
+    useEffect(() => {
+        if (success){
+            cookieStore.set('auth_token', response.access_token);
+            //cookieStore.set('refresh_token', response.refresh_token);  TODO: Depois salvar o refresh token, att da api
+            
+            router.push('/dashboard');
+        }
+    }, [success])
 
     // TODO: Tratar mensagem de error e succes melhor
     return (

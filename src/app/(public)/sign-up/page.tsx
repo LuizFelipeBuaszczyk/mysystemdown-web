@@ -14,7 +14,7 @@ interface UserSchema {
 
 
 export default function SignUp() {
-    const { submit, loading, error, success } = useForm("/users/");
+    const { submit, loading, error, success, response} = useForm("/users/");
     const [formData, setFormData] = useState<UserSchema>({
         first_name: '',
         last_name: '',
@@ -32,6 +32,7 @@ export default function SignUp() {
     const handleFormSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
         submit(formData);
+
     }
 
     // TODO: Tratar mensagem de error e succes melhor

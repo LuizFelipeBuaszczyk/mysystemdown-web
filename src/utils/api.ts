@@ -6,6 +6,7 @@ export async function apiRequest<T>(endpoint: string, method: string, body?: any
         method,
         headers: { "Content-Type": "application/json" },
         body: body ? JSON.stringify(body) : undefined,
+        cache: 'no-store',
     });
 
     if (!res.ok) {
