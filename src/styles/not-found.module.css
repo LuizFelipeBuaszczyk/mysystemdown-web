@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+}
+
+.conteiner h1 {
+    font-size: 50px;
+    margin: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
