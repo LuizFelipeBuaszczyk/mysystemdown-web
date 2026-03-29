@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from 'react';
-
 import { useForm } from '@/hooks/useForm';
+import Form from '@/components/form';
+
 import styles from '@/app/(private)/tenants/tenant.module.css';
 
 interface ClientSchema {
@@ -45,7 +46,7 @@ export default function Tenants() {
         <div className={styles.container}>
             <h1>My Tenants</h1>
 
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <section className={styles.input}>
                     <label htmlFor="nameInput">Name</label>
                     <input type="text" name="name" id="nameInput" onChange={handleChange}/>
@@ -59,7 +60,7 @@ export default function Tenants() {
                 <button type='submit'>Create</button>
                 {error && <p style={{color: "red"}}>{error}</p>}
                 {success && <p style={{color: "green"}}>Tenant created</p>}
-            </form>
+            </Form>
         </div>
     );
 }

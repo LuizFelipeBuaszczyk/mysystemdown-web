@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 300px;
+}
+
+.container section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.container button {
+    width: 100%;
+}
+
+.container input {
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid black;
+    padding: 5px;
+}

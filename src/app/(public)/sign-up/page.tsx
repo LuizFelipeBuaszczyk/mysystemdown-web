@@ -5,6 +5,8 @@ import styles from '@/app/(public)/sign-in/signin.module.css';
 import { useState } from 'react';
 import { useForm } from '@/hooks/useForm';
 
+import Form from '@/components/form';
+
 interface UserSchema {
     first_name: string;
     last_name: string;
@@ -40,7 +42,7 @@ export default function SignUp() {
         <div className={styles.container}>
             <h1>Sign Up</h1>
 
-            <form onSubmit={handleFormSubmit}>
+            <Form onSubmit={handleFormSubmit}>
                 <section className={styles.input}>
                     <label htmlFor="firstNameInput">First Name</label>
                     <input type="text" name="first_name" id="firstNameInput" onChange={handleChange}/>
@@ -64,7 +66,7 @@ export default function SignUp() {
                 <button type="submit">Sign Up</button>
                 {error && <p style={{ color: "red" }}>{error}</p>} 
                 {success && <p style={{ color: "green" }}>Enviado com sucesso!</p>}
-            </form>
+            </Form>
         </div>
     )
 }

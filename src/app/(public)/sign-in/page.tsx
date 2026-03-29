@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
+import Form from '@/components/form';
 
 import styles from '@/app/(public)/sign-in/signin.module.css';
 import { useForm } from '@/hooks/useForm';
@@ -46,7 +47,7 @@ export default function SignIn() {
         <div className={styles.container}>
             <h1>Login</h1>
 
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <section className={styles.input}>
                     <label htmlFor="emailInput">Email</label>
                     <input type="email" name="email" id="emailInput" onChange={handleChange}/>
@@ -59,7 +60,7 @@ export default function SignIn() {
 
                 {error && <p style={{ color: "red" }}>{error}</p>} 
                 {success && <p style={{ color: "green" }}>Enviado com sucesso!</p>}
-            </form>
+            </Form>
 
             <Link href='/sign-up'>Crie uma conta</Link>
         </div>

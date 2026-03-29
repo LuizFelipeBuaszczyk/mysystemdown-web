@@ -5,6 +5,7 @@
     align-items: center;
     gap: 50px;
     height: 80%;
+    width: 100%;
 }
 
 .container button {
