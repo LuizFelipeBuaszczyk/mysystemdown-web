@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Form from '@/components/form';
+import Modal from '@/components/modal';
 
 import styles from '@/app/(private)/tenants/tenant.module.css';
 
@@ -23,6 +24,8 @@ export default function Tenants() {
         client: null
     })
 
+    const [openCreateModal, setOpenCreateModal] = useState(false);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setClientData({
             ...clientData,
@@ -39,19 +42,25 @@ export default function Tenants() {
         <div className={styles.container}>
             <h1>My Tenants</h1>
 
-            <Form endpoint='/tenants' formData={formData}>
-                <section className={styles.input}>
-                    <label htmlFor="nameInput">Name</label>
-                    <input type="text" name="name" id="nameInput" onChange={handleChange}/>
-                </section>
+            <Modal id='modal-tenants-create' setOpen={setOpenCreateModal}>
+                <h1>Create Tenant</h1>
+                <Form endpoint='/tenants' formData={formData}>
+                    <section className={styles.input}>
+                        <label htmlFor="nameInput">Name</label>
+                        <input type="text" name="name" id="nameInput" onChange={handleChange}/>
+                    </section>
 
-                <section className={styles.input}>
-                    <label htmlFor="schemaNameInput">Schema Name</label>
-                    <input type="text" name="schema_name" id="schemaNameInput" onChange={handleChange}/>
-                </section>
+                    <section className={styles.input}>
+                        <label htmlFor="schemaNameInput">Schema Name</label>
+                        <input type="text" name="schema_name" id="schemaNameInput" onChange={handleChange}/>
+                    </section>
 
-                <button type='submit'>Create</button>
-            </Form>
+                    <button type='submit'>Create</button>
+                </Form>
+            </Modal>
+
+
+            <button onClick={() => (document.getElementById('modal-tenants-create') as HTMLDialogElement).showModal()}>Create Tenant</button>
         </div>
     );
 }
