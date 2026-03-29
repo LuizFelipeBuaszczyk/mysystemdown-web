@@ -16,7 +16,6 @@ interface UserSchema {
 
 
 export default function SignUp() {
-    const { submit, loading, error, success, response} = useForm("/users/");
     const [formData, setFormData] = useState<UserSchema>({
         first_name: '',
         last_name: '',
@@ -31,18 +30,12 @@ export default function SignUp() {
         })
     }
 
-    const handleFormSubmit = async (e: React.SubmitEvent) => {
-        e.preventDefault();
-        submit(formData);
-
-    }
-
     // TODO: Tratar mensagem de error e succes melhor
     return (
         <div className={styles.container}>
             <h1>Sign Up</h1>
 
-            <Form onSubmit={handleFormSubmit}>
+            <Form endpoint="/users" formData={formData}>
                 <section className={styles.input}>
                     <label htmlFor="firstNameInput">First Name</label>
                     <input type="text" name="first_name" id="firstNameInput" onChange={handleChange}/>
@@ -64,8 +57,6 @@ export default function SignUp() {
                 </section>
 
                 <button type="submit">Sign Up</button>
-                {error && <p style={{ color: "red" }}>{error}</p>} 
-                {success && <p style={{ color: "green" }}>Enviado com sucesso!</p>}
             </Form>
         </div>
     )

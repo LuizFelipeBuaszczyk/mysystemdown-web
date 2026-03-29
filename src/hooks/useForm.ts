@@ -12,7 +12,7 @@ export function useForm(endpoint: string) {
     setError(null);
     setSuccess(false);
     try {
-      const response = await apiRequest(endpoint, "POST", data);
+      const response = await apiRequest(`${endpoint}/`, "POST", data);
       setSuccess(true);
       setResponse(response);
     } catch (err: any) {

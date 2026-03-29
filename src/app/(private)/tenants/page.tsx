@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from 'react';
-import { useForm } from '@/hooks/useForm';
+import { useEffect, useState } from 'react';
 import Form from '@/components/form';
 
 import styles from '@/app/(private)/tenants/tenant.module.css';
@@ -16,7 +15,6 @@ interface TenantSchema {
 }
 
 export default function Tenants() {
-    const {submit, loading, error, success, response} = useForm("/tenants/");
     const [clientData, setClientData] = useState<ClientSchema>({
         name: '',
         schema_name: ''
@@ -34,19 +32,14 @@ export default function Tenants() {
         setFormData({
             client: clientData
         })
-
     }
 
-    const handleSubmit = async (e: React.SubmitEvent) => {
-        e.preventDefault();
-        submit(formData);
-    }
 
     return (
         <div className={styles.container}>
             <h1>My Tenants</h1>
 
-            <Form onSubmit={handleSubmit}>
+            <Form endpoint='/tenants' formData={formData}>
                 <section className={styles.input}>
                     <label htmlFor="nameInput">Name</label>
                     <input type="text" name="name" id="nameInput" onChange={handleChange}/>
@@ -58,8 +51,6 @@ export default function Tenants() {
                 </section>
 
                 <button type='submit'>Create</button>
-                {error && <p style={{color: "red"}}>{error}</p>}
-                {success && <p style={{color: "green"}}>Tenant created</p>}
             </Form>
         </div>
     );

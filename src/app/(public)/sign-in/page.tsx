@@ -13,9 +13,14 @@ interface LoginSchema {
     password: string;
 }
 
+interface LoginResponse {
+    access_token: string;
+    refresh_token: string;
+}
+
 export default function SignIn() {
+    const [response, setResponse] = useState<LoginResponse | null>(null);
     const router = useRouter();
-    const { submit, loading, error, success, response } = useForm("/auth/login/");
     const [formData, setFormData] = useState<LoginSchema>({
         email: '',
         password: ''
@@ -28,26 +33,21 @@ export default function SignIn() {
         })
     }
 
-    const handleSubmit = async (e: React.SubmitEvent) => {
-        e.preventDefault();
-        await submit(formData);
-    }
-
     useEffect(() => {
-        if (success){
+        if (response){
             cookieStore.set('auth_token', response.access_token);
             cookieStore.set('refresh_token', response.refresh_token); 
             
             router.push('/dashboard');
         }
-    }, [success])
+    }, [response])
 
     // TODO: Tratar mensagem de error e succes melhor
     return (
         <div className={styles.container}>
             <h1>Login</h1>
 
-            <Form onSubmit={handleSubmit}>
+            <Form endpoint="/auth/login" formData={formData} setResponse={setResponse}>
                 <section className={styles.input}>
                     <label htmlFor="emailInput">Email</label>
                     <input type="email" name="email" id="emailInput" onChange={handleChange}/>
@@ -57,9 +57,6 @@ export default function SignIn() {
                     <input type="password" name="password" id="passwordInput" onChange={handleChange}/>
                 </section>                
                 <button type="submit">Login</button>
-
-                {error && <p style={{ color: "red" }}>{error}</p>} 
-                {success && <p style={{ color: "green" }}>Enviado com sucesso!</p>}
             </Form>
 
             <Link href='/sign-up'>Crie uma conta</Link>
