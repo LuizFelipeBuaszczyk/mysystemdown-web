@@ -1,4 +1,6 @@
-import Header from '@/components/header';
+import Aside from '@/components/aside';
+
+
 
 export default function PrivateLayout({
   children,
@@ -6,8 +8,9 @@ export default function PrivateLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div style={{ display: "flex", height: "100%" , gap: "2rem"}}>
+      <Aside />
       {children}
-    </>
+    </div>
   );
 }
