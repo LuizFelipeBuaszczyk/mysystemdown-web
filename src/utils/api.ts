@@ -8,7 +8,7 @@ export async function apiRequest<T>(endpoint: string, method: string, body?: any
     const headers = new Headers({"Content-Type": "application/json"});
 
     if (token){
-        headers.append('HTTP_AUTHORIZATION', `Bearer ${token.value}`);
+        headers.append('AUTHORIZATION', `Bearer ${token.value}`);
     }
 
     const res = await fetch(`${API_URL}${endpoint}`, {

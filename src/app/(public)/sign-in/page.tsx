@@ -35,7 +35,7 @@ export default function SignIn() {
     useEffect(() => {
         if (success){
             cookieStore.set('auth_token', response.access_token);
-            //cookieStore.set('refresh_token', response.refresh_token);  TODO: Depois salvar o refresh token, att da api
+            cookieStore.set('refresh_token', response.refresh_token); 
             
             router.push('/dashboard');
         }
