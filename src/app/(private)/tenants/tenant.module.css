@@ -24,23 +24,3 @@
     background-color: white;
     transition: 0.5s
 }
-
-.container form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 300px;
-}
-
-.input {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.input input {
-    height: 32px;
-    border-radius: 4px;
-    border: 1px solid black;
-    padding: 5px;
-}

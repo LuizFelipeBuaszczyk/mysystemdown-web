@@ -1,0 +1,25 @@
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.input input {
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid black;
+    padding: 5px;
+}
