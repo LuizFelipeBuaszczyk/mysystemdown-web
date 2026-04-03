@@ -6,11 +6,12 @@ export function useForm(endpoint: string) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [response, setResponse] = useState<any>(null);
-
+  
   const submit = async (data: any) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
+    
     try {
       const response = await apiRequest(`${endpoint}/`, "POST", data);
       setSuccess(true);
