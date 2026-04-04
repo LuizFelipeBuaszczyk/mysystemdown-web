@@ -12,3 +12,11 @@ export async function getToken() {
     .catch(() => null);
 }
 
+export async function getRefreshToken() {
+  const cookieStore: Promise<ReadonlyRequestCookies> = cookies();
+
+  return cookieStore
+    .then(store => store.get("refresh_token"))
+    .then(cookie => cookie ? cookie.value : null)
+    .catch(() => null);
+}

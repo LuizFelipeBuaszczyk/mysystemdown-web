@@ -22,7 +22,7 @@ export async function apiRequest<T>(endpoint: string, method: string, body?: any
 }
 
 
-async function submitRequest(method: string, endpoint: string, headers?: Headers, body?: any, token?: any) {
+export async function submitRequest(method: string, endpoint: string, headers?: Headers, body?: any, token?: any) {
     if (method === "GET") {
         return await fetch(`${API_URL}${endpoint}`, {
             method,
