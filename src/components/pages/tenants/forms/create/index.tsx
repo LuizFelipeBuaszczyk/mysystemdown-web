@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import styles from '@/forms/tenants/create/create.module.css';
+import styles from '@/components/pages/tenants/forms/create/create.module.css';
 
 import Form from "@/components/form"
 import Modal from "@/components/modal"

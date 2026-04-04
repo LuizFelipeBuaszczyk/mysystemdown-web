@@ -1,7 +1,7 @@
 import Table from '@/components/table';
 
-import CreateTenantForm from '@/forms/tenants/create';
-import TenantFormButtons from '@/forms/tenants/buttons';
+import CreateTenantForm from '@/components/pages/tenants/forms/create';
+import TenantFormButtons from '@/components/pages/tenants/buttons';
 
 import styles from '@/app/(private)/tenants/tenant.module.css';
 
