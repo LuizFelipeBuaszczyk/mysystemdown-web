@@ -1,7 +1,6 @@
-import Table from '@/components/table';
-
 import CreateTenantForm from '@/components/pages/tenants/forms/create';
 import TenantFormButtons from '@/components/pages/tenants/buttons';
+import TenantsTable from '@/components/pages/tenants/table';
 
 import styles from '@/app/(private)/tenants/tenant.module.css';
 
@@ -13,8 +12,7 @@ export default function Tenants() {
         <div className={styles.container}>
             <h1>My Tenants</h1>    
 
-            <Table endpoint='/tenants' columns={TENANT_COLUMNS}></Table>
-
+            <TenantsTable />
 
             <TenantFormButtons />
             <CreateTenantForm />
