@@ -1,21 +1,18 @@
-
+"use server";
 
 import styles from '@/components/pages/tenants/table/table.module.css';
 
 import Table from "@/components/table";
 
-interface Tenant {
-    id: number;
-    name: string;
-    schema_name: string;
-}
+const TENANT_ENDPOINT: string = '/tenants';
+const TENANT_SELECT_FUNCTION: string = 'setTenant';
+const TENANT_COLUMNS: string[] = ['id', 'name', 'schema_name'];
 
-const TENANT_COLUMNS = ['id', 'name', 'schema_name'];
+export default async function TenantsTable() {
 
-export default function TenantsTable() {
     return (
         <div className={styles.container}>
-            <Table endpoint='/tenants' columns={TENANT_COLUMNS} />
+            <Table endpoint={TENANT_ENDPOINT} columns={TENANT_COLUMNS} selectFunction={TENANT_SELECT_FUNCTION} />
         </div>
     );
 }
