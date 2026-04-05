@@ -12,7 +12,7 @@ const REDIRECT_WHEN_AUTHENTICATED = '/dashboard';
 export function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const publicRoute = publicRoutes.find(route => route.path === path);
-  const token = request.cookies.get('auth_token');
+  const token = request.cookies.get('access_token');
   
   if (path === '/') {
     return NextResponse.next();

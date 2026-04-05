@@ -18,7 +18,7 @@ interface LoginResponse {
 }
 
 export default function SignIn() {
-    const [response, setResponse] = useState<LoginResponse | null>(null);
+    const [response, setResponse] = useState<Response>();
     const router = useRouter();
     const [formData, setFormData] = useState<LoginSchema>({
         email: '',
@@ -33,9 +33,12 @@ export default function SignIn() {
     }
 
     useEffect(() => {
-        if (response){
-            cookieStore.set('auth_token', response.access_token);
-            cookieStore.set('refresh_token', response.refresh_token); 
+        if (response?.status === 200) {
+            response.json().then((data: LoginResponse) => {
+                cookieStore.set('access_token', data.access_token);
+                cookieStore.set('refresh_token', data.refresh_token);
+                
+            });
             
             router.push('/dashboard');
         }

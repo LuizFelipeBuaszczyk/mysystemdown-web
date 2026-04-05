@@ -7,7 +7,7 @@ export async function getToken() {
   const cookieStore: Promise<ReadonlyRequestCookies> = cookies();
 
   return cookieStore
-    .then(store => store.get("auth_token"))
+    .then(store => store.get("access_token"))
     .then(cookie => cookie ? cookie.value : null)
     .catch(() => null);
 }

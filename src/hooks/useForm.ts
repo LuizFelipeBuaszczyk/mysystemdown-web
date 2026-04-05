@@ -14,8 +14,14 @@ export function useForm(endpoint: string) {
     
     try {
       const response = await apiRequest(`${endpoint}/`, "POST", data);
-      setSuccess(true);
+
+      if (response.ok){
+        setSuccess(true);
+      } else{
+        setError(`Error: ${response.status} ${response.statusText}`);
+      }
       setResponse(response);
+      
     } catch (err: any) {
       setError(err.message);
     } finally {

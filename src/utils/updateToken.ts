@@ -1,9 +1,7 @@
 
-import { getRefreshToken } from "./getToken";
 import { submitRequest } from "./api";
 
-export async function updateToken() {
-    const refreshToken = await getRefreshToken();
+export async function updateToken(refreshToken: string): Promise<string> {
     if (!refreshToken) {
         throw new Error("No refresh token available");
     }
@@ -15,7 +13,6 @@ export async function updateToken() {
         if (!response.ok) {
             throw new Error("Failed to refresh token");
         }
-
         const data = await response.json();
         return data.access_token;
     } catch (error) {
