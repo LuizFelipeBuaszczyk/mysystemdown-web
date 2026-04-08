@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { apiRequest } from "@/utils/api";
+import { submitRequest } from "@/utils/api";
 
 export function useForm(endpoint: string) {
   const [loading, setLoading] = useState(false);
@@ -13,12 +15,15 @@ export function useForm(endpoint: string) {
     setSuccess(false);
     
     try {
-      const response = await apiRequest(`${endpoint}/`, "POST", data);
 
-      if (response.ok){
+      const headers = new Headers({"Content-Type": "application/json",});
+      const response: Response = await submitRequest("POST", `${endpoint}/`, headers, data);
+
+      if (response.ok) {
         setSuccess(true);
       } else{
-        setError(`Error: ${response.status} ${response.statusText}`);
+        const errorData = await response.json();
+        setError(`Error: ${errorData.message || 'Unknown error'}`);
       }
       setResponse(response);
       

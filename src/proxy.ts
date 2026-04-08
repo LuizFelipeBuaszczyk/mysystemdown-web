@@ -9,10 +9,10 @@ const publicRoutes = [
 const REDIRECT_WHEN_NOT_AUTHENTICATED = '/sign-in';
 const REDIRECT_WHEN_AUTHENTICATED = '/dashboard';
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const publicRoute = publicRoutes.find(route => route.path === path);
-  const token = request.cookies.get('access_token');
+  const accessToken = request.cookies.get('access_token');
   
   if (path === '/') {
     return NextResponse.next();
@@ -20,19 +20,40 @@ export function proxy(request: NextRequest) {
   
   if (publicRoute) {
     
-    if (!token) {
+    if (!accessToken) {
       return NextResponse.next();
     }
     
-    if (token && publicRoute.whenAuthenticated === 'redirect') {
+    if (accessToken && publicRoute.whenAuthenticated === 'redirect') {
       return NextResponse.redirect(new URL(REDIRECT_WHEN_AUTHENTICATED, request.url));
     }
   }
 
-  if (!token && !publicRoute){
-    return NextResponse.redirect(new URL(REDIRECT_WHEN_NOT_AUTHENTICATED, request.url));
+  if (!accessToken && !publicRoute){
+    const refreshToken = request.cookies.get('refresh_token');
+
+    const res: Response = await fetch(`${process.env.DJANGO_API}/api/auth/refresh/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refresh_token: refreshToken?.value }),
+
+    });
+
+    if (!res.ok){
+      const nextResponse =  NextResponse.redirect(new URL(REDIRECT_WHEN_NOT_AUTHENTICATED, request.url));
+      nextResponse.cookies.delete('refresh_token');
+      return nextResponse;
+    }
+      const refreshData = await res.json();
+      const newAccessToken = refreshData.access_token;
+      
+      const nextResponse = NextResponse.next();
+      nextResponse.cookies.set('access_token', newAccessToken, { httpOnly: true, path: '/', expires: new Date(Date.now() + 5 * 60 * 1000) });
+      return nextResponse;  
   }
-  
+
   return NextResponse.next();
 }
 

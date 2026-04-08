@@ -1,3 +1,5 @@
+"user client";
+
 import { getToken } from "./getToken";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -10,26 +12,26 @@ export async function apiRequest<T>(endpoint: string, method: string, body?: any
         headers.append("Authorization", `Bearer ${token}`);
     }
 
-    return await submitRequest(method, endpoint, headers, body, token);
+    return await submitRequest(method, endpoint, headers, body);
 }
 
 
-export async function submitRequest(method: string, endpoint: string, headers?: Headers, body?: any, token?: any): Promise<Response> {
+export async function submitRequest(method: string, endpoint: string, headers?: Headers, body?: any): Promise<Response> {
     if (method === "GET") {
-        return await fetch(`${API_URL}${endpoint}`, {
+        return await fetch(`/api/${endpoint}`, {
             method,
             headers: headers,
             cache: 'no-store',
-            credentials: 'omit',
+            credentials: 'include',
         });
     }
     
-    return await fetch(`${API_URL}${endpoint}`, {
+    return await fetch(`/api/${endpoint}`, {
         method,
         headers: headers,
         body: body ? JSON.stringify(body) : undefined,
         cache: 'no-store',
-        credentials: 'omit',
+        credentials: 'include',
     });
 
 }

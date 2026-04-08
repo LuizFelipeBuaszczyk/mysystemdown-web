@@ -12,11 +12,6 @@ interface LoginSchema {
     password: string;
 }
 
-interface LoginResponse {
-    access_token: string;
-    refresh_token: string;
-}
-
 export default function SignIn() {
     const [response, setResponse] = useState<Response>();
     const router = useRouter();
@@ -33,13 +28,7 @@ export default function SignIn() {
     }
 
     useEffect(() => {
-        if (response?.status === 200) {
-            response.json().then((data: LoginResponse) => {
-                cookieStore.set('access_token', data.access_token);
-                cookieStore.set('refresh_token', data.refresh_token);
-                
-            });
-            
+        if (response?.status === 200) {            
             router.push('/dashboard');
         }
     }, [response])

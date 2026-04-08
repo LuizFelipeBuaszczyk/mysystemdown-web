@@ -35,7 +35,7 @@ export default function SignUp() {
         <div className={styles.container}>
             <h1>Sign Up</h1>
 
-            <Form endpoint="/users" formData={formData}>
+            <Form endpoint="/signup" formData={formData}>
                 <section className={styles.input}>
                     <label htmlFor="firstNameInput">First Name</label>
                     <input type="text" name="first_name" id="firstNameInput" onChange={handleChange}/>
