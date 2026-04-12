@@ -1,17 +1,11 @@
 "use server";
 
-import { cookies } from 'next/headers';
-
 import { ClientTenantBody } from '@/schemas/tenant.schema';
+import fetchData from '@/actions/fetchData';
 
 export default async function TenantId( { params }: { params: { id: string } }) {
     const { id } = await params;
-    const headers = new Headers({"Content-Type": "application/json"});
-    headers.append('Cookie', (await cookies()).toString());
-    const data: ClientTenantBody = await fetch(`http://localhost:3000/api/tenants/${id}/`, {
-        method: 'GET',
-        headers: headers,
-    }).then(res => res.json());
+    const data: ClientTenantBody = await fetchData({ url: `http://localhost:3000/api/tenants/${id}/`, method: 'GET' });
 
     return (
         <div>
