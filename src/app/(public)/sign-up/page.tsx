@@ -3,20 +3,14 @@
 import styles from '@/app/(public)/sign-in/signin.module.css';
 
 import { useState } from 'react';
-import { useForm } from '@/hooks/useForm';
+import { SignupRequestBody } from '@/schemas/signup.schema';
 
 import Form from '@/components/form';
 
-interface UserSchema {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-}
 
 
 export default function SignUp() {
-    const [formData, setFormData] = useState<UserSchema>({
+    const [formData, setFormData] = useState<SignupRequestBody>({
         first_name: '',
         last_name: '',
         email: '',

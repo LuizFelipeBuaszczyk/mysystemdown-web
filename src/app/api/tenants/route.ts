@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateToken } from "@/utils/updateToken";
+import { CreateTenantRequestBody } from "@/schemas/tenant.schema";
 
 export async function GET(req: NextRequest) {
     let access_token = req.cookies.get('access_token')?.value;
@@ -45,15 +46,6 @@ export async function GET(req: NextRequest) {
 
     const data = await tenantsResponse.json();
     return NextResponse.json(data, { status: 200 });
-}
-
-interface CreateTenantRequestBody {
-    client: ClientTenantBody
-}
-
-interface ClientTenantBody {
-    name: string
-    schema_name: string;
 }
 
 export async function POST(req: NextRequest) {

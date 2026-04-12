@@ -1,11 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
+import { SignupRequestBody } from "@/schemas/signup.schema";
 
-interface SignupRequestBody {
-    first_name: string;
-    last_name: string;
-    email: string;    
-    password: string;
-}
 
 export async function POST(req: NextRequest) {
     const body: SignupRequestBody = await req.json();

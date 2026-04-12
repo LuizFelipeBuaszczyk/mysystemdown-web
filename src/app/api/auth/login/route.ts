@@ -1,14 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-interface LoginRequestBody {
-    email: string;
-    password: string;
-}
-
-interface LoginResponse {
-    access_token: string;
-    refresh_token: string;
-}
+import { LoginRequestBody, LoginResponse } from '@/schemas/login.schema';
 
 export async function POST(req: NextRequest) {
     const body: LoginRequestBody = await req.json();

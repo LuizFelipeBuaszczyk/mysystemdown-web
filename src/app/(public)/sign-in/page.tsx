@@ -6,16 +6,13 @@ import { useRouter } from 'next/navigation'
 import Form from '@/components/form';
 
 import styles from '@/app/(public)/sign-in/signin.module.css';
+import { LoginRequestBody } from '@/schemas/login.schema';
 
-interface LoginSchema {
-    email: string;
-    password: string;
-}
 
 export default function SignIn() {
     const [response, setResponse] = useState<Response>();
     const router = useRouter();
-    const [formData, setFormData] = useState<LoginSchema>({
+    const [formData, setFormData] = useState<LoginRequestBody>({
         email: '',
         password: ''
     })

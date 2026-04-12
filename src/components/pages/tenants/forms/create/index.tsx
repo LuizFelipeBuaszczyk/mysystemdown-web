@@ -6,24 +6,15 @@ import styles from '@/components/pages/tenants/forms/create/create.module.css';
 
 import Form from "@/components/form"
 import Modal from "@/components/modal"
-
-
-interface ClientSchema {
-    name: string;
-    schema_name: string;
-}
-
-interface TenantSchema {
-    client: ClientSchema | null;
-}
+import { CreateTenantRequestBody, ClientTenantBody } from '@/schemas/tenant.schema';
 
 export default function CreateTenantForm() {
-    const [clientData, setClientData] = useState<ClientSchema>({
+    const [clientData, setClientData] = useState<ClientTenantBody>({
         name: '',
         schema_name: ''
     })
-    const [formData, setFormData] = useState<TenantSchema>({
-        client: null
+    const [formData, setFormData] = useState<CreateTenantRequestBody>({
+        client: clientData
     })
 
     const [openCreateModal, setOpenCreateModal] = useState(false);
