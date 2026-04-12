@@ -1,10 +1,11 @@
 
 export interface CreateTenantRequestBody {
-    client: ClientTenantBody
+    client: ClientTenantBody;
 }
 
 export interface ClientTenantBody {
-    name: string
+    id: number | null;
+    name: string;
     schema_name: string;
 }
 
