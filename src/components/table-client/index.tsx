@@ -26,7 +26,7 @@ export default function TableClient({data, columns, selectFunction}: TableClient
                 </thead>
                 <tbody className={styles.tbody}>
                     {data.map((item: any) => (
-                        <TableRow key={item.id} onClick={() => mapHook(selectFunction)(item.id)}>
+                        <TableRow key={item.id} onClick={() => mapHook(selectFunction)(item)}>
                             {columns.map((col) => (
                                 <td key={col}>{item[col]}</td>
                             ))}

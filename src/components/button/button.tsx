@@ -3,10 +3,16 @@
 import style from '@/components/button/button.module.css';
 import mapHook from "@/utils/mapHook";
 
-export default function Button({ children, selectFunction, functionParameters }: { children: React.ReactNode, selectFunction: string, functionParameters?: any }) {
+interface ButtonProps {
+    children: React.ReactNode;
+    selectFunction: string;
+    functionParameters?: any;
+}
+
+export default function Button({ children, selectFunction, functionParameters}: ButtonProps) {
     return (
         <div className={style.container}>
-            <button onClick={() => mapHook(selectFunction)(functionParameters)}>
+            <button onClick={() => mapHook(selectFunction)(functionParameters )}>
                 {children}
             </button>
         </div>

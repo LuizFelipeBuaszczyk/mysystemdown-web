@@ -5,7 +5,7 @@ import styles from '@/components/pages/tenants/table/table.module.css';
 import Table from "@/components/table";
 
 const TENANT_ENDPOINT: string = 'tenants/';
-const TENANT_SELECT_FUNCTION: string = 'redirectTenant';
+const TENANT_SELECT_FUNCTION: string = 'setTenant';
 const TENANT_COLUMNS: string[] = ['id', 'name', 'schema_name'];
 
 export default async function TenantsTable() {

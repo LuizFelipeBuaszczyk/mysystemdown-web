@@ -31,7 +31,7 @@ export default function CreateTenantForm() {
     }
 
     return (
-        <Modal id='modal-tenants-create' setOpen={setOpenCreateModal}>
+        <Modal id='modal-tenants-create'>
             <div className={styles.container}>
                 <h1>Create Tenant</h1>
                 <Form endpoint='/tenants' formData={formData}>
