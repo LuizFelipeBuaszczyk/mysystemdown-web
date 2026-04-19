@@ -14,6 +14,12 @@ export default function Aside() {
                         <hr />
                     </section>
                 </ul>
+                <ul className={styles.navList}>
+                    <section className={styles.navSection}>
+                        <Link href="/systems">Systems</Link>
+                        <hr />
+                    </section>
+                </ul>
             </nav>
         </aside>
     );
