@@ -1,11 +1,16 @@
 "use client";
 
+import { useEffect, useState } from 'react';
 
 import styles from './privateHeader.module.css';
 import Button from '@/components/button/button';
 
 export default function PrivateHeader(  ) {
-    const tenant = localStorage.getItem('tenant') || 'No Tenant Selected';
+    const [tenant, setTenant] = useState('No tenant selected');
+    
+    useEffect(() => {
+        setTenant(localStorage.getItem('tenant') || 'No tenant selected');
+    }, []);
 
     return (
         <header className={styles.header}>

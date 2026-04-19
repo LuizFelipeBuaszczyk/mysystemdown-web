@@ -13,10 +13,6 @@ export default function Aside() {
                         <Link href="/dashboard">Dashboard</Link>
                         <hr />
                     </section>
-                    <section className={styles.navSection}>
-                        <Link href="/tenants">Tenants</Link>
-                        <hr />
-                    </section>
                 </ul>
             </nav>
         </aside>
