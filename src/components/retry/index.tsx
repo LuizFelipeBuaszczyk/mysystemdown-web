@@ -11,7 +11,6 @@ export default function Retry() {
         await updateToken(refresh_token || "").then(async (token) => {
             cookieStore.set('access_token', token);
         }).catch(async (error) => {
-            console.log(refresh_token);
 
             await logout(refresh_token || "").then(() => {
                 cookieStore.delete('access_token');
