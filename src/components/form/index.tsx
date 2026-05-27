@@ -8,11 +8,12 @@ interface FormProps {
   children: React.ReactNode;
   endpoint: string;
   formData: any;
+  method?: string;
   setResponse?: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function Form({ children, endpoint, formData, setResponse }: FormProps) {
-    const {submit, loading, error, success, response} = useForm(endpoint);
+export default function Form({ children, endpoint, formData, method, setResponse }: FormProps) {
+    const {submit, loading, error, success, response} = useForm(endpoint, method);
     
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();

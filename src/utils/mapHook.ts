@@ -1,6 +1,6 @@
 
 import { setTenant as setTenantAction, type TenantProp } from "@/actions/setTenant";
-import { redirectTenant } from "@/hooks/redirectUrl";
+import { redirectTenant, openSystemDetails } from "@/hooks/redirectUrl";
 import { openModal } from "@/hooks/modal";
 import { refreshPage } from "@/hooks/refreshPage";
 
@@ -17,6 +17,8 @@ export default function mapHook(selectedFunction: string) {
             return handleSetTenant;
         case 'redirectTenant':
             return redirectTenant;
+        case 'openSystemDetails':
+            return openSystemDetails;
         case 'refreshPage':
             return refreshPage;
         default:

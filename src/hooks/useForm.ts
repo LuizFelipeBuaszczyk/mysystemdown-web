@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { submitRequest } from "@/utils/api";
 
-export function useForm(endpoint: string) {
+export function useForm(endpoint: string, method: string = "POST") {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -17,7 +17,8 @@ export function useForm(endpoint: string) {
     try {
 
       const headers = new Headers({"Content-Type": "application/json",});
-      const response: Response = await submitRequest("POST", `${endpoint}/`, headers, data);
+      const normalizedEndpoint = endpoint.endsWith('/') ? endpoint : `${endpoint}/`;
+      const response: Response = await submitRequest(method, normalizedEndpoint, headers, data);
 
       if (response.ok) {
         setSuccess(true);
