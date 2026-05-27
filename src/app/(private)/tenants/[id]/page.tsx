@@ -7,9 +7,9 @@ import fetchData from '@/actions/fetchData';
 import styles from './tenant.id.module.css';
 import Button from '@/components/button/button';
 
-export default async function TenantId( { params }: { params: { id: string } }) {
+export default async function TenantId( { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const data: ClientTenantBody = await fetchData({ url: `http://localhost:3000/api/tenants/${id}/`, method: 'GET' });
+    const data: ClientTenantBody = await fetchData(`tenants/${id}/`);
 
     return (
         <div className={styles.container}>
@@ -20,7 +20,7 @@ export default async function TenantId( { params }: { params: { id: string } }) 
                 <p>Schema Name: {data.schema_name}</p>
             </section>
             <section className={styles.actions}>
-                <Button selectFunction='setTenant' functionParameters={data.id}>Selecionar {data.name}</Button>
+                <Button selectFunction='setTenant' functionParameters={data}>Selecionar {data.name}</Button>
             </section>
         </div>
     );

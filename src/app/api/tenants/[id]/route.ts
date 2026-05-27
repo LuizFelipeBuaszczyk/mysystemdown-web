@@ -1,23 +1,31 @@
 import { NextResponse, NextRequest } from "next/server";
+import { apiClient } from "@/lib/api-client";
+import type { ClientTenantBody } from "@/schemas/tenant.schema";
+import { errorResponse } from "@/lib/errors";
 
-export async function GET(req: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  try {
     const { id } = await params;
-    const access_token = req.cookies.get('access_token')?.value;
 
-    const tenantResponse = await fetch(`${process.env.DJANGO_API}/api/tenants/${id}/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'AUTHORIZATION': `Bearer ${access_token}`
-        },
-    });
+    const { data, newAccessToken } = await apiClient<ClientTenantBody>(
+      req,
+      `/api/tenants/${id}/`
+    );
 
-    if (!tenantResponse.ok) {
-        return NextResponse.json({ message: 'Failed to fetch tenant' }, { status: 500 });
+    const response = NextResponse.json(data, { status: 200 });
+    if (newAccessToken) {
+      response.cookies.set("access_token", newAccessToken, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "strict",
+        maxAge: 5 * 60,
+      });
     }
-
-    const data = await tenantResponse.json();
-    return NextResponse.json(data, { status: 200 });
+    return response;
+  } catch {
+    return errorResponse("Failed to fetch tenant", 500);
+  }
 }

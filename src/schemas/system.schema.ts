@@ -1,10 +1,8 @@
+import { z } from "zod";
 
+export const systemSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
+});
 
-interface SystemRequestBody {
-    name: string;
-    description: string;
-}
-
-export type { 
-    SystemRequestBody 
-};
+export type SystemRequestBody = z.infer<typeof systemSchema>;

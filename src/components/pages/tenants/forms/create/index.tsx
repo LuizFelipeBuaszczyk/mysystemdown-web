@@ -10,6 +10,7 @@ import { CreateTenantRequestBody, ClientTenantBody } from '@/schemas/tenant.sche
 
 export default function CreateTenantForm() {
     const [clientData, setClientData] = useState<ClientTenantBody>({
+        id: null,
         name: '',
         schema_name: ''
     })

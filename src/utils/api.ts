@@ -1,8 +1,6 @@
-"user client";
+"use client";
 
 import { getToken } from "./getToken";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function apiRequest<T>(endpoint: string, method: string, body?: any): Promise<Response> {
 

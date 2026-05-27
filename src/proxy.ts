@@ -30,28 +30,27 @@ export async function proxy(request: NextRequest) {
   }
 
   if (!accessToken && !publicRoute){
-    const refreshToken = request.cookies.get('refresh_token');
+    const origin = request.nextUrl.origin;
 
-    const res: Response = await fetch(`${process.env.DJANGO_API}/api/auth/refresh/`, {
+    const res: Response = await fetch(`${origin}/api/auth/refresh`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Cookie': request.headers.get('cookie') || '',
       },
-      body: JSON.stringify({ refresh_token: refreshToken?.value }),
-
     });
 
     if (!res.ok){
-      const nextResponse =  NextResponse.redirect(new URL(REDIRECT_WHEN_NOT_AUTHENTICATED, request.url));
+      const nextResponse = NextResponse.redirect(new URL(REDIRECT_WHEN_NOT_AUTHENTICATED, request.url));
       nextResponse.cookies.delete('refresh_token');
       return nextResponse;
     }
-      const refreshData = await res.json();
-      const newAccessToken = refreshData.access_token;
-      
-      const nextResponse = NextResponse.next();
-      nextResponse.cookies.set('access_token', newAccessToken, { httpOnly: true, path: '/', expires: new Date(Date.now() + 5 * 60 * 1000) });
-      return nextResponse;  
+
+    const refreshData = await res.json();
+    const newAccessToken = refreshData.access_token;
+
+    const nextResponse = NextResponse.next();
+    nextResponse.cookies.set('access_token', newAccessToken, { httpOnly: true, path: '/', sameSite: 'strict', maxAge: 5 * 60 });
+    return nextResponse;
   }
 
   return NextResponse.next();

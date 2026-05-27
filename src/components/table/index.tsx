@@ -12,8 +12,8 @@ interface tableData {
 }
 
 export default async function Table({endpoint, columns, selectFunction}: tableData) {
-    const data: any[] = await fetchData({url: `http://localhost:3000/api/${endpoint}`, method: METHOD}) ;
-    
+    const data: any[] = await fetchData(endpoint);
+
     return (
         <TableClient data={data} columns={columns} selectFunction={selectFunction} />
     );

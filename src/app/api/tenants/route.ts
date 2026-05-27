@@ -1,65 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateToken } from "@/utils/updateToken";
-import { CreateTenantRequestBody } from "@/schemas/tenant.schema";
+import { apiClient } from "@/lib/api-client";
+import { createTenantSchema } from "@/schemas/tenant.schema";
+import type { ClientTenantBody } from "@/schemas/tenant.schema";
+import { errorResponse } from "@/lib/errors";
 
 export async function GET(req: NextRequest) {
-    let access_token = req.cookies.get('access_token')?.value;
+  try {
+    const { data, newAccessToken } = await apiClient<ClientTenantBody[]>(
+      req,
+      "/api/tenants/"
+    );
 
-    const tenantsResponse = await fetch(`${process.env.DJANGO_API}/api/tenants/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'AUTHORIZATION': `Bearer ${access_token}`
-        },
-    });
-
-    if (!tenantsResponse.ok) {
-
-        if (tenantsResponse.status === 401) {
-            try {
-                access_token = await updateToken(req.cookies.get('refresh_token')?.value || '');
-                
-                if (access_token) {
-                    const retryResponse = await fetch(`${process.env.DJANGO_API}/api/tenants/`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'AUTHORIZATION': `Bearer ${access_token}`
-                        },
-                    });
-
-                    if (retryResponse.ok) {
-                        const data = await retryResponse.json();
-                        
-                        const response = NextResponse.json(data, { status: 200 });
-                        response.cookies.set('access_token', access_token, { httpOnly: true, path: '/', expires: new Date(Date.now() + 5 * 60 * 1000) });
-                        return response;
-                    }
-                }
-            } catch (error) {
-                return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-            }
-        }
-
-        return NextResponse.json({ message: 'Failed to fetch tenants' }, { status: 500 });
+    const response = NextResponse.json(data, { status: 200 });
+    if (newAccessToken) {
+      response.cookies.set("access_token", newAccessToken, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "strict",
+        maxAge: 5 * 60,
+      });
     }
-
-    const data = await tenantsResponse.json();
-    return NextResponse.json(data, { status: 200 });
+    return response;
+  } catch {
+    return errorResponse("Failed to fetch tenants", 500);
+  }
 }
 
 export async function POST(req: NextRequest) {
-    let access_token = req.cookies.get('access_token')?.value;
+  try {
+    const body = await req.json();
 
-    const body: CreateTenantRequestBody = await req.json();
-    
-    return await fetch(`${process.env.DJANGO_API}/api/tenants/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'AUTHORIZATION': `Bearer ${access_token}`
-        },
-        body: JSON.stringify(body)
-    });
+    const parsed = createTenantSchema.safeParse(body);
+    if (!parsed.success) {
+      return errorResponse("Invalid input", 400, parsed.error.flatten());
+    }
 
+    const { data, newAccessToken } = await apiClient<ClientTenantBody>(
+      req,
+      "/api/tenants/",
+      {
+        method: "POST",
+        body: parsed.data,
+      }
+    );
+
+    const response = NextResponse.json(data, { status: 201 });
+    if (newAccessToken) {
+      response.cookies.set("access_token", newAccessToken, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "strict",
+        maxAge: 5 * 60,
+      });
+    }
+    return response;
+  } catch {
+    return errorResponse("Failed to create tenant", 500);
+  }
 }
